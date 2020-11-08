@@ -1,0 +1,70 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+
+h1 {
+  font-size: 20px;
+}
+
+h3 {
+  font-size: 22px;
+  line-height: 32px;
+}
+
+form {
+  text-align: center;
+  margin: 2rem auto;
+}
+
+input:focus {
+  outline: 0;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: text;
+  color: #ffffff;
+}
+
+button.unselected {
+  cursor: pointer;
+  color: #007bff;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.container {
+  width: 60%;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 30px;
+  padding: 3rem;
+  background: #101048;
+}
+
+.card {
+  margin: 40px auto;
+  text-align: center;
+  background: none;
+}
+
+.fa-circle {
+  font-size: 30px;
+  margin: 10px;
+}
+
+.big-icon {
+  font-size: 40px;
+}

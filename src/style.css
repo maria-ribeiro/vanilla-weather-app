@@ -47,7 +47,7 @@ button:focus {
 }
 
 .container {
-  width: 60%;
+  width: 50%;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 30px;
   padding: 3rem;
@@ -58,6 +58,7 @@ button:focus {
   margin: 40px auto;
   text-align: center;
   background: none;
+  border: none;
 }
 
 .fa-circle {

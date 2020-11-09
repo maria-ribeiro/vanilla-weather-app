@@ -47,7 +47,7 @@ function getTemperature(location, unit){
     .get(apiUrl)
     .then(response => {
       let temperature = Math.round(response.data.main.temp);
-      let temperatureElement = document.querySelector("#current-degrees");
+      let temperatureElement = document.querySelector("#current-temp");
       temperatureElement.innerHTML = temperature;
       let cityName = document.querySelector("#city-name");
       cityName.innerHTML =  response.data.name;
@@ -56,32 +56,32 @@ function getTemperature(location, unit){
     });
 }
 
-function updateCityLocation(event){
+function updateTemperature(location) {
+  let currentScale = document.querySelector(".scale");
+  if (currentScale.innerHTML === "°C") {
+    getTemperature(location, "metric");
+  } else {
+    getTemperature(location, "imperial");
+  }
+}
+
+function updateCityTemperature(event){
   event.preventDefault();
   let cityInput = document.querySelector("#city-input").value;
-  let currentTemp = document.querySelector("#current-temp");
-  if (currentTemp.innerHTML.slice(-1) === "C") {
-    getTemperature(`q=${cityInput}`, "metric");
-  } else {
-    getTemperature(`q=${cityInput}`, "imperial");
-  }
+  updateTemperature(`q=${cityInput}`);
 }
 
-function updateCoordLocation(position){
+function updateCoordTemperature(position){
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
-  let currentTemp = document.querySelector("#current-temp");
-  if (currentTemp.innerHTML.slice(-1) === "C") {
-    getTemperature(`lat=${latitude}&lon=${longitude}`, "metric");
-  } else {
-    getTemperature(`lat=${latitude}&lon=${longitude}`, "imperial");
-  }
+  updateTemperature(`lat=${latitude}&lon=${longitude}`);
 }
 
-// User Location
+
+// User Geolocation
 function toUserLocation(event) {
   event.preventDefault();
-  navigator.geolocation.getCurrentPosition(updateCoordLocation);
+  navigator.geolocation.getCurrentPosition(updateCoordTemperature);
 }
 
 // Celsius <--> Fahrenheit
@@ -93,39 +93,39 @@ function fahrenheitToCelsius(fahren){
   return Math.round((fahren - 32) * 5/9);
 }
 
-function changeToFahrenheit(tempId, degreesId){
-  let currentTemp = document.querySelector("#" + tempId);
-  let currentDegrees = document.querySelector("#" + degreesId);
-  let fahrenDegrees = celsiusToFahrenheit(currentDegrees.innerHTML);
-  currentTemp.innerHTML = `<span id="${degreesId}">${fahrenDegrees}</span>°F`;
+function changeToFahrenheit(){
+  let temperatures = document.querySelectorAll(".temperature");
+  temperatures.forEach(temp => {
+    temp.innerHTML = celsiusToFahrenheit(temp.innerHTML);
+  })
+  let scales = document.querySelectorAll(".scale");
+  scales.forEach(scale => {
+    scale.innerHTML = "°F";
+  })
 }
 
-function changeToCelsius(tempId, degreesId){
-  let currentTemp = document.querySelector("#" + tempId);
-  let currentDegrees = document.querySelector("#" + degreesId);
-  let celsiusDegrees = fahrenheitToCelsius(currentDegrees.innerHTML);
-  currentTemp.innerHTML = `<span id="${degreesId}">${celsiusDegrees}</span>°C`;
+function changeToCelsius(){
+  let temperatures = document.querySelectorAll(".temperature");
+  temperatures.forEach(temp => {
+    temp.innerHTML = fahrenheitToCelsius(temp.innerHTML);
+  })
+  let scales = document.querySelectorAll(".scale");
+  scales.forEach(scale => {
+    scale.innerHTML = "°C";
+  })
 }
 
 function changeScale(event){
   event.preventDefault();
-  let currentTemp = document.querySelector("#current-temp");
-  if (currentTemp.innerHTML.slice(-1) === "C") {
-    changeToFahrenheit("current-temp", "current-degrees");
-    for (var i=1; i<=5; i++) {
-      changeToFahrenheit(`day-${i}-max`, `day-${i}-max-deg`);
-      changeToFahrenheit(`day-${i}-min`, `day-${i}-min-deg`);
-    }
+  let currentScale = document.querySelector(".scale");
+  if (currentScale.innerHTML === "°C") {
+    changeToFahrenheit();
     let scaleF = document.querySelector("#fahrenheit");
     scaleF.classList.remove("unselected");
     let scaleC = document.querySelector("#celsius");
     scaleC.classList.add("unselected");
   } else {
-    changeToCelsius("current-temp", "current-degrees");
-    for (var i=1; i<=5; i++) {
-      changeToCelsius(`day-${i}-max`, `day-${i}-max-deg`);
-      changeToCelsius(`day-${i}-min`, `day-${i}-min-deg`);
-    }
+    changeToCelsius();
     let scaleF = document.querySelector("#fahrenheit");
     scaleF.classList.add("unselected");
     let scaleC = document.querySelector("#celsius");
@@ -139,7 +139,7 @@ let locationButton = document.querySelector("#location");
 locationButton.addEventListener("click", toUserLocation);
 
 let cityForm = document.querySelector("#city-form");
-cityForm.addEventListener("submit", updateCityLocation);
+cityForm.addEventListener("submit", updateCityTemperature);
 
 let fahren = document.querySelector("#fahrenheit");
 fahren.addEventListener("click", changeScale);
@@ -148,5 +148,4 @@ let celsius = document.querySelector("#celsius");
 celsius.addEventListener("click", changeScale);
 
 
- 
-getTemperature("q=Lisbon", "metric");
+updateTemperature("q=Lisbon", "metric");

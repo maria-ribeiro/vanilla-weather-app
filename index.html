@@ -13,13 +13,18 @@
   </head>
 <body>
   <div class="container">
-    <h1>Weather App</h1>
-    <button class="unselected" id="location"><i class="fas fa-location-arrow"></i></button>
-
+    <div class="row">
+      <div class="col-6">
+        <h1>Weather App</h1>
+      </div>
+      <div class="col-5"></div>
+      <div class="col-1">
+        <button class="unselected" id="location"><i class="fas fa-location-arrow"></i></button>
+      </div>
+    </div>
     <form id="city-form">
       <input type="text" autofocus="on" autocomplete="off" placeholder="Enter a city" id="city-input">
     </form> 
-
     <div class="card-deck w-80">
       <div class="card">
         <div class="card-body">
@@ -116,7 +121,7 @@
     </div>
 
     <small>
-      <a href="https://github.com/maria-ribeiro/vanilla-weather-app" target="_blank">Open-souce code</a> by Maria Ribeiro
+      <a href="https://github.com/maria-ribeiro/vanilla-weather-app" target="_blank">Open-source code</a> by Maria Ribeiro
     </small>
   </div>
   <script src ="src/app.js"></script>

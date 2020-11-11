@@ -21,6 +21,11 @@ h3 {
   line-height: 32px;
 }
 
+small {
+  display: block;
+  text-align: center;
+}
+
 form {
   text-align: center;
   margin: 2rem auto;

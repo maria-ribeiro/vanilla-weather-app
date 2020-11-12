@@ -46,6 +46,31 @@ function convertUnix(unixTimestamp) {
   return `${hours}:${minutes}`;
 }
 
+// Skycons Weather Icons 
+var skycons = new Skycons({"color": "white"});
+
+
+let mapSkycons = {
+  "01d": Skycons.CLEAR_DAY,
+  "01n": Skycons.CLEAR_NIGHT,
+  "02d": Skycons.PARTLY_CLOUDY_DAY,
+  "02n": Skycons.PARTLY_CLOUDY_NIGHT,
+  "03d": Skycons.CLOUDY,
+  "03n": Skycons.CLOUDY,
+  "04d": Skycons.CLOUDY,
+  "04n": Skycons.CLOUDY,
+  "09d": Skycons.RAIN,
+  "09n": Skycons.RAIN,
+  "10d": Skycons.SLEET,
+  "10n": Skycons.SLEET,
+  "11d": Skycons.CLOUDY,
+  "11n": Skycons.CLOUDY,
+  "13d": Skycons.SNOW,
+  "13n": Skycons.SNOW,
+  "50d": Skycons.FOG,
+  "50n": Skycons.FOG
+}
+
 
 // Get Weather - Open Weather Map API
 function getTemperature(location, unit){
@@ -75,6 +100,9 @@ function getTemperature(location, unit){
       windSpeed.innerHTML = Math.round(response.data.wind.speed * 3.6);
       let humidity = document.querySelector("#humidity");
       humidity.innerHTML = response.data.main.humidity;
+      skycons.remove("weather-icon");
+      skycons.add("weather-icon", mapSkycons[response.data.weather[0].icon]);
+      skycons.play();
     });
 }
 

@@ -59,12 +59,12 @@ let mapSkycons = {
   "03n": Skycons.CLOUDY,
   "04d": Skycons.CLOUDY,
   "04n": Skycons.CLOUDY,
-  "09d": Skycons.RAIN,
-  "09n": Skycons.RAIN,
-  "10d": Skycons.SLEET,
-  "10n": Skycons.SLEET,
-  "11d": Skycons.CLOUDY,
-  "11n": Skycons.CLOUDY,
+  "09d": Skycons.SHOWERS_DAY,
+  "09n": Skycons.SHOWERS_NIGHT,
+  "10d": Skycons.RAIN,
+  "10n": Skycons.RAIN,
+  "11d": Skycons.THUNDER,
+  "11n": Skycons.THUNDER,
   "13d": Skycons.SNOW,
   "13n": Skycons.SNOW,
   "50d": Skycons.FOG,
@@ -199,3 +199,4 @@ celsius.addEventListener("click", changeScale);
 
 
 updateTemperature("q=Lisbon", "metric");
+

@@ -14,10 +14,9 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-6">
+      <div class="col-11">
         <h1>Weather App</h1>
       </div>
-      <div class="col-5"></div>
       <div class="col-1">
         <button class="unselected" id="location"><i class="fas fa-location-arrow"></i></button>
       </div>
@@ -25,40 +24,31 @@
     <form id="city-form">
       <input type="text" autofocus="on" autocomplete="off" placeholder="Enter a city" id="city-input">
     </form> 
-    <div class="card-deck w-80">
-      <div class="card">
-        <div class="card-body">
-          <h3 class="card-title" id="city-name">Lisbon</h3>
-          <p id="date-time"></p>
-          <i class="far fa-circle big-icon"></i>
-          <h3>
-            <span class="temperature" id="current-temp"></span>
-            <span class="scale">°C</span>
-          </h3>
-          <button id="celsius">°C</button> | <button class="unselected" id="fahrenheit">°F</button>
-        </div>
-      </div>
+  
+    <div class="card now-card">
+      <div class="card-body">
+        <h3 class="card-title" id="city-name">Lisbon</h3>
+        <p id="date-time"></p>
+        <h3>
+          <span class="temperature" id="current-temp"></span>
+          <span class="scale">°C</span>
+        </h3>
+        <button id="celsius">°C</button> | <button class="unselected" id="fahrenheit">°F</button>
+        
+        <p>
+          <span id="weather-description"><strong>Clear</strong></span>
+          <br>
+          <strong>Min</strong> <span class="temperature" id="min-temperature">17</span><span class="scale">°C</span>
+          <strong>Max</strong> <span class="temperature" id="max-temperature">24</span><span class="scale">°C</span>
+          <br>
+          <strong>Sunrise</strong> <span id="sunrise">07:49 </span>
+          <strong>Sunset</strong> <span id="sunset">18:47</span>
+          <br>  
+          <strong>Humidity</strong> <span id="humidity">30</span>%
+          <strong>Wind</strong> <span id="wind-speed">6</span><span class="speed-scale">km/h</span>
+        </p>
 
-      <!-- 
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-6">
-              <p><strong>Min</strong> 17℃</p>
-              <p><strong>Sunrise</strong> 07:49</p>
-              <p><strong>Precipitation</strong> 12%</p>
-              <p><strong>Wind</strong> 6km/h</p>
-           </div>
-           <div class="col-6">
-             <p><strong>Max</strong> 24℃</p>
-             <p><strong>Sunset</strong> 18:47</p>
-             <p><strong>Humidity</strong> 30%</p>
-             <p><strong>Moon</strong> Waxing crescent</p>
-           </div>
-         </div>
-       </div>
       </div>
-      -->
     </div>
 
 

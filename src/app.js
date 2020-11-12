@@ -39,6 +39,13 @@ function nowDateTime () {
   return `${longDay}, ${date} ${longMonth} <br/> ${hours}:${minutes}`;
 }
 
+function convertUnix(unixTimestamp) {
+  let now = new Date(unixTimestamp * 1000);
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  return `${hours}:${minutes}`;
+}
+
 
 // Get Weather - Open Weather Map API
 function getTemperature(location, unit){
@@ -46,6 +53,7 @@ function getTemperature(location, unit){
   axios
     .get(apiUrl)
     .then(response => {
+      console.log(response.data);
       let temperature = Math.round(response.data.main.temp);
       let temperatureElement = document.querySelector("#current-temp");
       temperatureElement.innerHTML = temperature;
@@ -53,6 +61,20 @@ function getTemperature(location, unit){
       cityName.innerHTML =  response.data.name;
       let dateTime = document.querySelector("#date-time");
       dateTime.innerHTML = nowDateTime();
+      let weatherDescription = document.querySelector("#weather-description");
+      weatherDescription.innerHTML = response.data.weather[0].description;
+      let sunrise = document.querySelector("#sunrise");
+      sunrise.innerHTML = convertUnix(response.data.sys.sunrise);
+      let sunset = document.querySelector("#sunset");
+      sunset.innerHTML = convertUnix(response.data.sys.sunset);
+      let minTemperature = document.querySelector("#min-temperature");
+      minTemperature.innerHTML = Math.round(response.data.main.temp_min);
+      let maxTemperature = document.querySelector("#max-temperature");
+      maxTemperature.innerHTML = Math.round(response.data.main.temp_max);
+      let windSpeed = document.querySelector("#wind-speed");
+      windSpeed.innerHTML = Math.round(response.data.wind.speed * 3.6);
+      let humidity = document.querySelector("#humidity");
+      humidity.innerHTML = response.data.main.humidity;
     });
 }
 

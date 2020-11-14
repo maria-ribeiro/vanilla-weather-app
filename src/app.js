@@ -157,7 +157,7 @@ function updateCityWeather(event){
 function updateCoordWeather(position){
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
-  updateWeather(`lat=${latitude}&long=${longitude}`);
+  updateWeather(`lat=${latitude}&lon=${longitude}`);
 }
 
 

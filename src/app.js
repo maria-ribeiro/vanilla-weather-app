@@ -84,6 +84,7 @@ function getWeather(location, unit){
   coordinates = axios
     .get(apiUrl)
     .then(response => {
+      console.log(response.data);
       let temperature = Math.round(response.data.main.temp);
       let temperatureElement = document.querySelector("#current-temp");
       temperatureElement.innerHTML = temperature;
@@ -98,7 +99,11 @@ function getWeather(location, unit){
       let sunset = document.querySelector("#sunset");
       sunset.innerHTML = getTime(response.data.sys.sunset);
       let windSpeed = document.querySelector("#wind-speed");
-      windSpeed.innerHTML = Math.round(response.data.wind.speed * 3.6);
+      if (unit === "metric") {
+        windSpeed.innerHTML = Math.round(response.data.wind.speed * 3.6);
+      } else {
+        windSpeed.innerHTML = Math.round(response.data.wind.speed * 1.609344);
+      }
       let humidity = document.querySelector("#humidity");
       humidity.innerHTML = response.data.main.humidity;
       let latitude = response.data.coord.lat;
@@ -114,7 +119,7 @@ function getWeather(location, unit){
       axios
         .get(apiUrl)
         .then(response => {
-          console.log(response.data);
+          //console.log(response.data);
           let minTemperature = document.querySelector("#min-temperature");
           minTemperature.innerHTML = Math.round(response.data.daily[0].temp.min);
           let maxTemperature = document.querySelector("#max-temperature");

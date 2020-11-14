@@ -1,5 +1,5 @@
 // API Key 
-let apiKey = "cef6ae7836ecd17a2e06e0819975713e";
+let weatherApiKey = "cef6ae7836ecd17a2e06e0819975713e";
 
 // Date 
 let days = [
@@ -39,16 +39,22 @@ function nowDateTime () {
   return `${longDay}, ${date} ${longMonth} <br/> ${hours}:${minutes}`;
 }
 
-function convertUnix(unixTimestamp) {
+function getTime(unixTimestamp) {
   let now = new Date(unixTimestamp * 1000);
   let hours = now.getHours();
   let minutes = now.getMinutes();
   return `${hours}:${minutes}`;
 }
 
+function getDate(unixTimestamp) {
+  let now = new Date(unixTimestamp * 1000);
+  let date = now.getDate();
+  let month = now.getMonth() + 1;
+  return `${date}/${month}`;
+}
+
 // Skycons Weather Icons 
 var skycons = new Skycons({"color": "white"});
-
 
 let mapSkycons = {
   "01d": Skycons.CLEAR_DAY,
@@ -73,65 +79,92 @@ let mapSkycons = {
 
 
 // Get Weather - Open Weather Map API
-function getTemperature(location, unit){
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?${location}&units=${unit}&appid=${apiKey}`;
-  axios
+function getWeather(location, unit){
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?${location}&units=${unit}&appid=${weatherApiKey}`;
+  coordinates = axios
     .get(apiUrl)
     .then(response => {
-      console.log(response.data);
       let temperature = Math.round(response.data.main.temp);
       let temperatureElement = document.querySelector("#current-temp");
       temperatureElement.innerHTML = temperature;
       let cityName = document.querySelector("#city-name");
-      cityName.innerHTML =  response.data.name;
+      cityName.innerHTML = response.data.name;
       let dateTime = document.querySelector("#date-time");
       dateTime.innerHTML = nowDateTime();
       let weatherDescription = document.querySelector("#weather-description");
       weatherDescription.innerHTML = response.data.weather[0].description;
       let sunrise = document.querySelector("#sunrise");
-      sunrise.innerHTML = convertUnix(response.data.sys.sunrise);
+      sunrise.innerHTML= getTime(response.data.sys.sunrise);
       let sunset = document.querySelector("#sunset");
-      sunset.innerHTML = convertUnix(response.data.sys.sunset);
-      let minTemperature = document.querySelector("#min-temperature");
-      minTemperature.innerHTML = Math.round(response.data.main.temp_min);
-      let maxTemperature = document.querySelector("#max-temperature");
-      maxTemperature.innerHTML = Math.round(response.data.main.temp_max);
+      sunset.innerHTML = getTime(response.data.sys.sunset);
       let windSpeed = document.querySelector("#wind-speed");
       windSpeed.innerHTML = Math.round(response.data.wind.speed * 3.6);
       let humidity = document.querySelector("#humidity");
       humidity.innerHTML = response.data.main.humidity;
+      let latitude = response.data.coord.lat;
+      let longitude = response.data.coord.lon;
       skycons.remove("weather-icon");
       skycons.add("weather-icon", mapSkycons[response.data.weather[0].icon]);
       skycons.play();
+      return { latitude, longitude };
     });
+
+    coordinates.then(coords => {
+      apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coords.latitude}&lon=${coords.longitude}&units=${unit}&exclude=hourly,minutely&appid=${weatherApiKey}`;
+      axios
+        .get(apiUrl)
+        .then(response => {
+          console.log(response.data);
+          let minTemperature = document.querySelector("#min-temperature");
+          minTemperature.innerHTML = Math.round(response.data.daily[0].temp.min);
+          let maxTemperature = document.querySelector("#max-temperature");
+          maxTemperature.innerHTML = Math.round(response.data.daily[0].temp.max);
+          for(var i=1; i<6; i++){
+            let date = document.querySelector(`#day-${i}`);
+            date.innerHTML = getDate(response.data.daily[i].dt);
+            let minTemperature = document.querySelector(`#day-${i}-min`);
+            minTemperature.innerHTML = Math.round(response.data.daily[i].temp.min);
+            let maxTemperature = document.querySelector(`#day-${i}-max`);
+            maxTemperature.innerHTML = Math.round(response.data.daily[i].temp.max);
+            skycons.remove(`weather-icon-${i}`);
+            skycons.add(`weather-icon-${i}`, mapSkycons[response.data.daily[i].weather[0].icon]);
+            skycons.play();
+          }          
+    })
+    .catch(err => console.log(err));
+
+
+    });
+
 }
 
-function updateTemperature(location) {
+
+function updateWeather(location) {
   let currentScale = document.querySelector(".scale");
   if (currentScale.innerHTML === "°C") {
-    getTemperature(location, "metric");
+    getWeather(location, "metric");
   } else {
-    getTemperature(location, "imperial");
+    getWeather(location, "imperial");
   }
 }
 
-function updateCityTemperature(event){
+function updateCityWeather(event){
   event.preventDefault();
   let cityInput = document.querySelector("#city-input").value;
-  updateTemperature(`q=${cityInput}`);
+  updateWeather(`q=${cityInput}`);
 }
 
-function updateCoordTemperature(position){
+function updateCoordWeather(position){
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
-  updateTemperature(`lat=${latitude}&lon=${longitude}`);
+  updateWeather(`lat=${latitude}&long=${longitude}`);
 }
 
 
 // User Geolocation
 function toUserLocation(event) {
   event.preventDefault();
-  navigator.geolocation.getCurrentPosition(updateCoordTemperature);
+  navigator.geolocation.getCurrentPosition(updateCoordWeather);
 }
 
 // Celsius <--> Fahrenheit
@@ -189,7 +222,7 @@ let locationButton = document.querySelector("#location");
 locationButton.addEventListener("click", toUserLocation);
 
 let cityForm = document.querySelector("#city-form");
-cityForm.addEventListener("submit", updateCityTemperature);
+cityForm.addEventListener("submit", updateCityWeather);
 
 let fahren = document.querySelector("#fahrenheit");
 fahren.addEventListener("click", changeScale);
@@ -198,5 +231,4 @@ let celsius = document.querySelector("#celsius");
 celsius.addEventListener("click", changeScale);
 
 
-updateTemperature("q=Lisbon", "metric");
-
+updateWeather("q=lisbon");

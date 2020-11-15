@@ -12,43 +12,35 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
 <body>
-  <div class="container">
+  <div class="container light">
     <div class="row">
       <div class="col-11">
         <h1>Weather App</h1>
       </div>
       <div class="col-1">
-        <button class="unselected" id="location"><i class="fas fa-location-arrow"></i></button>
+        <button class="active" id="location"><i class="fas fa-location-arrow"></i></button>
       </div>
     </div>
     <form id="city-form">
       <input type="text" autofocus="on" autocomplete="off" placeholder="Enter a city" id="city-input">
     </form> 
-  
+
     <div class="card now-card">
       <div class="card-body">
-        <h3 class="card-title" id="city-name">Lisbon</h3>
-        <p id="date-time"></p>
-        <canvas id="weather-icon" width="64" height="64"></canvas>
+        <h2 class="card-title" id="city-name"></h2>
+        <canvas id="weather-icon" width="120" height="120"></canvas>
         <h3>
           <span class="temperature" id="current-temp"></span>
-          <span class="scale">°C</span>
+          <span class="units"><button id="celsius">°C</button> | <button class="active" id="fahrenheit">°F</button></span>
         </h3>
-        <button id="celsius">°C</button> | <button class="unselected" id="fahrenheit">°F</button>
-        
+        <p id="date-time"></p>
         <p>
-          <span id="weather-description"><strong>Clear</strong></span>
+          <span id="weather-description"></span>
           <br>
-          <strong>Min</strong> <span class="temperature" id="min-temperature">17</span><span class="scale">°C</span>
-          <strong>Max</strong> <span class="temperature" id="max-temperature">24</span><span class="scale">°C</span>
-          <br>
-          <strong>Sunrise</strong> <span id="sunrise">07:49 </span>
-          <strong>Sunset</strong> <span id="sunset">18:47</span>
-          <br>  
-          <strong>Humidity</strong> <span id="humidity">30</span>%
-          <strong>Wind</strong> <span id="wind-speed">6</span><span class="speed-scale">km/h</span>
-        </p>
-
+          <i class="fas fa-tint"></i> <span id="humidity"></span>%
+          <br>            
+          <i class="fas fa-wind"></i> <span id="wind-speed"></span>km/h
+        </p>   
       </div>
     </div>
 
@@ -58,63 +50,58 @@
 
       <div class="card">
         <div class="card-body">
-          <p class="card-title" id="day-1">17/10</p>
+          <p class="card-title" id="day-1"></p>
           <canvas id="weather-icon-1" width="42" height="42"></canvas>
           <p>
-            <span class="temperature" id="day-1-max">18</span><span class="scale">°C</span>
-            <br/>
-            <span class="temperature" id="day-1-min">9</span><span class="scale">°C</span>
+            <span class="temperature" id="day-1-max"></span>
+            <span class="temperature min" id="day-1-min"></span>
           </p>
         </div>
       </div>
       <div class="card">
         <div class="card-body">
-          <p class="card-title" id="day-2">17/10</p>
+          <p class="card-title" id="day-2"></p>
           <canvas id="weather-icon-2" width="42" height="42"></canvas>
           <p>
-            <span class="temperature" id="day-2-max">18</span><span class="scale">°C</span>
-            <br />
-            <span class="temperature" id="day-2-min">9</span><span class="scale">°C</span>
+            <span class="temperature" id="day-2-max"></span>
+            <span class="temperature min" id="day-2-min"></span>
           </p>
         </div>
       </div>
       <div class="card">
         <div class="card-body">
-          <p class="card-title" id="day-3">17/10</p>
+          <p class="card-title" id="day-3"></p>
           <canvas id="weather-icon-3" width="42" height="42"></canvas>
           <p>
-            <span class="temperature" id="day-3-max">18</span><span class="scale">°C</span>
-            <br />
-            <span class="temperature" id="day-3-min">9</span><span class="scale">°C</span>
+            <span class="temperature" id="day-3-max"></span>
+            <span class="temperature min" id="day-3-min"></span>
           </p>
         </div>
       </div>
       <div class="card">
         <div class="card-body">
-          <p class="card-title" id="day-4">17/10</p>
+          <p class="card-title" id="day-4"></p>
           <canvas id="weather-icon-4" width="42" height="42"></canvas>
           <p>
-            <span class="temperature" id="day-4-max">18</span><span class="scale">°C</span>
-            <br />
-            <span class="temperature" id="day-4-min">9</span><span class="scale">°C</span>
+            <span class="temperature" id="day-4-max"></span>
+            <span class="temperature min" id="day-4-min"></span>
           </p>
         </div>
       </div>
       <div class="card">
         <div class="card-body">
-          <p class="card-title" id="day-5">17/10</p>
+          <p class="card-title" id="day-5"></p>
           <canvas id="weather-icon-5" width="42" height="42"></canvas>
           <p>
-            <span class="temperature" id="day-5-max">18</span><span class="scale">°C</span>
-            <br />
-            <span class="temperature" id="day-5-min">9</span><span class="scale">°C</span>
+            <span class="temperature" id="day-5-max"></span>
+            <span class="temperature min" id="day-5-min"></span>
           </p>
         </div>
       </div>
     </div>
 
     <small>
-      <a href="https://github.com/maria-ribeiro/vanilla-weather-app" target="_blank">Open-source code</a> by Maria Ribeiro
+      <a class="light" href="https://github.com/maria-ribeiro/vanilla-weather-app" target="_blank">Open-source code</a> by Maria Ribeiro
     </small>
   </div>
   <script src="src/skycons.js"></script>

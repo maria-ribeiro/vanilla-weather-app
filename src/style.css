@@ -16,13 +16,12 @@ h1 {
   font-size: 20px;
 }
 
-h3 {
+h2 {
   font-size: 22px;
-  line-height: 32px;
 }
 
-p {
-  font-size: 14px;
+h3 {
+  font-size: 32px;
 }
 
 small {
@@ -37,11 +36,15 @@ form {
 
 input {
   border: none;
-  border-radius: 4px;
+  border-radius: px;
 }
 
 input:focus {
   outline: 0;
+}
+
+a:hover {
+  text-decoration: none;
 }
 
 button {
@@ -51,41 +54,69 @@ button {
   color: #ffffff;
 }
 
-button.unselected {
-  cursor: pointer;
-  color: #007bff;
-}
-
 button:focus {
   outline: 0;
 }
 
 .container {
-  max-width: 500px;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  max-width: 450px;
+  margin: 10px auto;
+  padding: 2rem 3rem;
+  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0 0 50px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
-  padding: 3rem;
-  background: #101048;
   color: #ffffff;
 }
 
-.card {
-  margin: 20px auto;
-  padding: 0px;
+.container.light {
+  background: #2c90e2;
+}
+
+.container.dark {
+  background: #101048;
+}
+
+.container.light button.active {
+  cursor: pointer;
+  color: #101048;
+}
+
+.container.dark button.active {
+  cursor: pointer;
+  color: #007bff;
+}
+
+.container.light a {
+  color: #101048;
+}
+
+.container.dark a {
+  color: #007bff;
+}
+
+.now-card {
+  margin-bottom: 0;
   text-align: center;
   background: none;
   border: none;
 }
 
-.card-body {
+.card-deck .card {
+  margin: 10px 10px 15px;
+  text-align: center;
+  background: none;
+  border: none;
+}
+
+.card-deck .card .card-body {
   padding: 5px;
 }
 
-.fa-circle {
-  font-size: 30px;
-  margin: 10px;
+.units {
+  position: relative;
+  font-size: 16px;
+  top: -10px;
 }
 
-.big-icon {
-  font-size: 40px;
+.min {
+  color: rgba(256, 256, 256, 0.5);
 }

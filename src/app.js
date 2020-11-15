@@ -1,6 +1,8 @@
 // API Key 
 let weatherApiKey = "cef6ae7836ecd17a2e06e0819975713e";
 
+let isCelsius = true;
+
 // Date 
 let days = [
   "Sunday",
@@ -10,6 +12,16 @@ let days = [
   "Thursday",
   "Friday",
   "Saturday"
+];
+
+let shortDays = [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
 ];
 
 let months = [
@@ -36,6 +48,9 @@ function nowDateTime () {
   let longMonth = months[month];
   let hours = now.getHours();
   let minutes = now.getMinutes();
+  if (minutes<10) {
+    minutes = `0${minutes}`;
+  }
   return `${longDay}, ${date} ${longMonth} <br/> ${hours}:${minutes}`;
 }
 
@@ -43,14 +58,19 @@ function getTime(unixTimestamp) {
   let now = new Date(unixTimestamp * 1000);
   let hours = now.getHours();
   let minutes = now.getMinutes();
+  if (minutes<10) {
+    minutes = `0${minutes}`;
+  }
   return `${hours}:${minutes}`;
 }
 
-function getDate(unixTimestamp) {
+function getWeekDay(unixTimestamp) {
   let now = new Date(unixTimestamp * 1000);
   let date = now.getDate();
   let month = now.getMonth() + 1;
-  return `${date}/${month}`;
+
+  let day = now.getDay();
+  return shortDays[day];
 }
 
 // Skycons Weather Icons 
@@ -94,10 +114,10 @@ function getWeather(location, unit){
       dateTime.innerHTML = nowDateTime();
       let weatherDescription = document.querySelector("#weather-description");
       weatherDescription.innerHTML = response.data.weather[0].description;
-      let sunrise = document.querySelector("#sunrise");
-      sunrise.innerHTML= getTime(response.data.sys.sunrise);
-      let sunset = document.querySelector("#sunset");
-      sunset.innerHTML = getTime(response.data.sys.sunset);
+      //let sunrise = document.querySelector("#sunrise");
+      //sunrise.innerHTML= getTime(response.data.sys.sunrise);
+      //let sunset = document.querySelector("#sunset");
+      //sunset.innerHTML = getTime(response.data.sys.sunset);
       let windSpeed = document.querySelector("#wind-speed");
       if (unit === "metric") {
         windSpeed.innerHTML = Math.round(response.data.wind.speed * 3.6);
@@ -120,13 +140,13 @@ function getWeather(location, unit){
         .get(apiUrl)
         .then(response => {
           //console.log(response.data);
-          let minTemperature = document.querySelector("#min-temperature");
-          minTemperature.innerHTML = Math.round(response.data.daily[0].temp.min);
-          let maxTemperature = document.querySelector("#max-temperature");
-          maxTemperature.innerHTML = Math.round(response.data.daily[0].temp.max);
+          //let minTemperature = document.querySelector("#min-temperature");
+          //minTemperature.innerHTML = Math.round(response.data.daily[0].temp.min);
+          //let maxTemperature = document.querySelector("#max-temperature");
+          //maxTemperature.innerHTML = Math.round(response.data.daily[0].temp.max);
           for(var i=1; i<6; i++){
             let date = document.querySelector(`#day-${i}`);
-            date.innerHTML = getDate(response.data.daily[i].dt);
+            date.innerHTML = getWeekDay(response.data.daily[i].dt);
             let minTemperature = document.querySelector(`#day-${i}-min`);
             minTemperature.innerHTML = Math.round(response.data.daily[i].temp.min);
             let maxTemperature = document.querySelector(`#day-${i}-max`);
@@ -145,8 +165,7 @@ function getWeather(location, unit){
 
 
 function updateWeather(location) {
-  let currentScale = document.querySelector(".scale");
-  if (currentScale.innerHTML === "°C") {
+  if (isCelsius) {
     getWeather(location, "metric");
   } else {
     getWeather(location, "imperial");
@@ -156,6 +175,7 @@ function updateWeather(location) {
 function updateCityWeather(event){
   event.preventDefault();
   let cityInput = document.querySelector("#city-input").value;
+  console.log(cityInput);
   updateWeather(`q=${cityInput}`);
 }
 
@@ -186,10 +206,7 @@ function changeToFahrenheit(){
   temperatures.forEach(temp => {
     temp.innerHTML = celsiusToFahrenheit(temp.innerHTML);
   })
-  let scales = document.querySelectorAll(".scale");
-  scales.forEach(scale => {
-    scale.innerHTML = "°F";
-  })
+  isCelsius = false;
 }
 
 function changeToCelsius(){
@@ -197,27 +214,23 @@ function changeToCelsius(){
   temperatures.forEach(temp => {
     temp.innerHTML = fahrenheitToCelsius(temp.innerHTML);
   })
-  let scales = document.querySelectorAll(".scale");
-  scales.forEach(scale => {
-    scale.innerHTML = "°C";
-  })
+  isCelsius = true;
 }
 
 function changeScale(event){
   event.preventDefault();
-  let currentScale = document.querySelector(".scale");
-  if (currentScale.innerHTML === "°C") {
+  if (isCelsius) {
     changeToFahrenheit();
     let scaleF = document.querySelector("#fahrenheit");
-    scaleF.classList.remove("unselected");
+    scaleF.classList.remove("active");
     let scaleC = document.querySelector("#celsius");
-    scaleC.classList.add("unselected");
+    scaleC.classList.add("active");
   } else {
     changeToCelsius();
     let scaleF = document.querySelector("#fahrenheit");
-    scaleF.classList.add("unselected");
+    scaleF.classList.add("active");
     let scaleC = document.querySelector("#celsius");
-    scaleC.classList.remove("unselected");
+    scaleC.classList.remove("active");
   }
 }
 

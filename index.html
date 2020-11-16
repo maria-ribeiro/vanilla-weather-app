@@ -28,17 +28,20 @@
     <div class="card now-card">
       <div class="card-body">
         <h2 class="card-title" id="city-name"></h2>
-        <canvas id="weather-icon" width="120" height="120"></canvas>
+        <p id="date-time"></p>
+        <canvas id="weather-icon" width="84" height="84"></canvas>
         <h3>
           <span class="temperature" id="current-temp"></span>
           <span class="units"><button id="celsius">°C</button> | <button class="active" id="fahrenheit">°F</button></span>
         </h3>
-        <p id="date-time"></p>
+
+        <small id="weather-description"></small>
+         
+        
         <p>
-          <span id="weather-description"></span>
+          <span id="max-temperature"></span> <span class="min" id="min-temperature"></span>
           <br>
           <i class="fas fa-tint"></i> <span id="humidity"></span>%
-          <br>            
           <i class="fas fa-wind"></i> <span id="wind-speed"></span>km/h
         </p>   
       </div>
@@ -46,8 +49,6 @@
 
 
     <div class="card-deck 80">
-
-
       <div class="card">
         <div class="card-body">
           <p class="card-title" id="day-1"></p>

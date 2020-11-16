@@ -51,7 +51,7 @@ function nowDateTime () {
   if (minutes<10) {
     minutes = `0${minutes}`;
   }
-  return `${longDay}, ${date} ${longMonth} <br/> ${hours}:${minutes}`;
+  return `${longDay}, ${date} ${longMonth}<br/>${hours}:${minutes}`;
 }
 
 function getTime(unixTimestamp) {
@@ -140,10 +140,10 @@ function getWeather(location, unit){
         .get(apiUrl)
         .then(response => {
           //console.log(response.data);
-          //let minTemperature = document.querySelector("#min-temperature");
-          //minTemperature.innerHTML = Math.round(response.data.daily[0].temp.min);
-          //let maxTemperature = document.querySelector("#max-temperature");
-          //maxTemperature.innerHTML = Math.round(response.data.daily[0].temp.max);
+          let minTemperature = document.querySelector("#min-temperature");
+          minTemperature.innerHTML = Math.round(response.data.daily[0].temp.min);
+          let maxTemperature = document.querySelector("#max-temperature");
+          maxTemperature.innerHTML = Math.round(response.data.daily[0].temp.max);
           for(var i=1; i<6; i++){
             let date = document.querySelector(`#day-${i}`);
             date.innerHTML = getWeekDay(response.data.daily[i].dt);

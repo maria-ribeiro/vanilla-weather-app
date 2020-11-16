@@ -21,7 +21,7 @@ h2 {
 }
 
 h3 {
-  font-size: 32px;
+  font-size: 48px;
 }
 
 small {
@@ -77,12 +77,13 @@ button:focus {
 
 .container.light button.active {
   cursor: pointer;
+  /*color: #1804cf;*/
   color: #101048;
 }
 
 .container.dark button.active {
   cursor: pointer;
-  color: #007bff;
+  color: #2c90e2;
 }
 
 .container.light a {
@@ -90,7 +91,7 @@ button:focus {
 }
 
 .container.dark a {
-  color: #007bff;
+  color: #2c90e2;
 }
 
 .now-card {
@@ -108,15 +109,20 @@ button:focus {
 }
 
 .card-deck .card .card-body {
-  padding: 5px;
+  padding: 0px;
 }
 
 .units {
-  position: relative;
+  position: absolute;
   font-size: 16px;
-  top: -10px;
+  top: 220px;
+  margin-left: 8px;
 }
 
 .min {
   color: rgba(256, 256, 256, 0.5);
+}
+
+#weather-description {
+  text-transform: capitalize;
 }

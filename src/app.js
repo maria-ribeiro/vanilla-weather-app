@@ -39,6 +39,17 @@ let months = [
   "December"
 ];
 
+function updateTheme(hours) {
+  let container = document.querySelector(".container");
+    if (hours < 18 && hours >= 6 ) {
+    container.classList.add("light");
+    container.classList.remove("dark");
+  } else {
+    container.classList.add("dark");
+    container.classList.remove("light")
+  }
+}
+
 function nowDateTime () {
   let now = new Date();
   let day = now.getDay();
@@ -51,6 +62,7 @@ function nowDateTime () {
   if (minutes<10) {
     minutes = `0${minutes}`;
   }
+  updateTheme(hours);
   return `${longDay}, ${date} ${longMonth}<br/>${hours}:${minutes}`;
 }
 
@@ -66,9 +78,6 @@ function getTime(unixTimestamp) {
 
 function getWeekDay(unixTimestamp) {
   let now = new Date(unixTimestamp * 1000);
-  let date = now.getDate();
-  let month = now.getMonth() + 1;
-
   let day = now.getDay();
   return shortDays[day];
 }

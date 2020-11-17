@@ -23,85 +23,99 @@
     </div>
     <form id="city-form">
       <input type="text" autofocus="on" autocomplete="off" placeholder="Enter a city" id="city-input">
-    </form> 
-
+    </form>
     <div class="card now-card">
       <div class="card-body">
-        <h2 class="card-title" id="city-name"></h2>
-        <p id="date-time"></p>
-        <canvas id="weather-icon" width="84" height="84"></canvas>
-        <h3>
-          <span class="temperature" id="current-temp"></span>
-          <span class="units"><button id="celsius">°C</button> | <button class="active" id="fahrenheit">°F</button></span>
-        </h3>
-
-        <small id="weather-description"></small>
-         
-        
-        <p>
-          <span id="max-temperature"></span> <span class="min" id="min-temperature"></span>
-          <br>
-          <i class="fas fa-tint"></i> <span id="humidity"></span>%
-          <i class="fas fa-wind"></i> <span id="wind-speed"></span>km/h
-        </p>   
+        <h2 id="city-name"></h2>
+        <p class="transparent" id="date-time"></p>
+        <div class="d-flex align-items-center">
+          <div class="col-6">
+            <canvas class="icon" id="weather-icon" width="84" height="84"></canvas>
+          </div>
+          <div class="col-6">
+            <h3 class="temperature" id="current-temp"></h3>
+            <p>
+              <span class="units"><button id="celsius">°C</button> | <button class="active" id="fahrenheit">°F</button></span>
+            </p>
+          </div>
+        </div>
+        </div>
+        <div class="card-description">
+          <div class="row">
+            <div class="col-3">
+              <small class="transparent" id="weather-description"></small>
+            </div>
+            <div class="col-3">
+              <small>
+                <span id="max-temperature"></span><br> <span class="transparent" id="min-temperature"></span>
+              </small>
+            </div>
+            <div class="col-3">
+              <small>
+                <i class="fas fa-tint"></i> <br><span class="transparent" id="humidity"></span>
+              </small>
+            </div>
+            <div class="col-3">
+              <small>
+                <i class="fas fa-wind"></i> <br><span class="transparent" id="wind-speed"></span>
+              </small>
+            </div>
+          </div>
       </div>
     </div>
-
-
     <div class="card-deck 80">
       <div class="card">
         <div class="card-body">
           <p class="card-title" id="day-1"></p>
-          <canvas id="weather-icon-1" width="42" height="42"></canvas>
+          <canvas class="icon" id="weather-icon-1" width="42" height="42"></canvas>
           <p>
             <span class="temperature" id="day-1-max"></span>
-            <span class="temperature min" id="day-1-min"></span>
+            <span class="temperature transparent" id="day-1-min"></span>
           </p>
         </div>
       </div>
       <div class="card">
         <div class="card-body">
           <p class="card-title" id="day-2"></p>
-          <canvas id="weather-icon-2" width="42" height="42"></canvas>
+          <canvas class="icon" id="weather-icon-2" width="42" height="42"></canvas>
           <p>
             <span class="temperature" id="day-2-max"></span>
-            <span class="temperature min" id="day-2-min"></span>
+            <span class="temperature transparent" id="day-2-min"></span>
           </p>
         </div>
       </div>
       <div class="card">
         <div class="card-body">
           <p class="card-title" id="day-3"></p>
-          <canvas id="weather-icon-3" width="42" height="42"></canvas>
+          <canvas class="icon" id="weather-icon-3" width="42" height="42"></canvas>
           <p>
             <span class="temperature" id="day-3-max"></span>
-            <span class="temperature min" id="day-3-min"></span>
+            <span class="temperature transparent" id="day-3-min"></span>
           </p>
         </div>
       </div>
       <div class="card">
         <div class="card-body">
           <p class="card-title" id="day-4"></p>
-          <canvas id="weather-icon-4" width="42" height="42"></canvas>
+          <canvas class="icon" id="weather-icon-4" width="42" height="42"></canvas>
           <p>
             <span class="temperature" id="day-4-max"></span>
-            <span class="temperature min" id="day-4-min"></span>
+            <span class="temperature transparent" id="day-4-min"></span>
           </p>
         </div>
       </div>
       <div class="card">
         <div class="card-body">
           <p class="card-title" id="day-5"></p>
-          <canvas id="weather-icon-5" width="42" height="42"></canvas>
+          <canvas class="icon" id="weather-icon-5" width="42" height="42"></canvas>
           <p>
             <span class="temperature" id="day-5-max"></span>
-            <span class="temperature min" id="day-5-min"></span>
+            <span class="temperature transparent" id="day-5-min"></span>
           </p>
         </div>
       </div>
     </div>
-
-    <small>
+    <small class="footer">
       <a class="light" href="https://github.com/maria-ribeiro/vanilla-weather-app" target="_blank">Open-source code</a> by Maria Ribeiro
     </small>
   </div>

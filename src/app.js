@@ -113,7 +113,6 @@ function getWeather(location, unit){
   coordinates = axios
     .get(apiUrl)
     .then(response => {
-      console.log(response.data);
       let temperature = Math.round(response.data.main.temp);
       let temperatureElement = document.querySelector("#current-temp");
       temperatureElement.innerHTML = temperature;
@@ -123,18 +122,14 @@ function getWeather(location, unit){
       dateTime.innerHTML = nowDateTime();
       let weatherDescription = document.querySelector("#weather-description");
       weatherDescription.innerHTML = response.data.weather[0].description;
-      //let sunrise = document.querySelector("#sunrise");
-      //sunrise.innerHTML= getTime(response.data.sys.sunrise);
-      //let sunset = document.querySelector("#sunset");
-      //sunset.innerHTML = getTime(response.data.sys.sunset);
       let windSpeed = document.querySelector("#wind-speed");
       if (unit === "metric") {
-        windSpeed.innerHTML = Math.round(response.data.wind.speed * 3.6);
+        windSpeed.innerHTML = Math.round(response.data.wind.speed * 3.6) + "km/h";
       } else {
-        windSpeed.innerHTML = Math.round(response.data.wind.speed * 1.609344);
+        windSpeed.innerHTML = Math.round(response.data.wind.speed * 1.609344) + "km/h";
       }
       let humidity = document.querySelector("#humidity");
-      humidity.innerHTML = response.data.main.humidity;
+      humidity.innerHTML = response.data.main.humidity + "%";
       let latitude = response.data.coord.lat;
       let longitude = response.data.coord.lon;
       skycons.remove("weather-icon");
@@ -143,12 +138,11 @@ function getWeather(location, unit){
       return { latitude, longitude };
     });
 
-    coordinates.then(coords => {
+  coordinates.then(coords => {
       apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coords.latitude}&lon=${coords.longitude}&units=${unit}&exclude=hourly,minutely&appid=${weatherApiKey}`;
       axios
         .get(apiUrl)
         .then(response => {
-          //console.log(response.data);
           let minTemperature = document.querySelector("#min-temperature");
           minTemperature.innerHTML = Math.round(response.data.daily[0].temp.min);
           let maxTemperature = document.querySelector("#max-temperature");
@@ -163,15 +157,10 @@ function getWeather(location, unit){
             skycons.remove(`weather-icon-${i}`);
             skycons.add(`weather-icon-${i}`, mapSkycons[response.data.daily[i].weather[0].icon]);
             skycons.play();
-          }          
-    })
+          }})
     .catch(err => console.log(err));
-
-
     });
-
 }
-
 
 function updateWeather(location) {
   if (isCelsius) {

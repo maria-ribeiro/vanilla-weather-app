@@ -17,34 +17,40 @@ h1 {
 }
 
 h2 {
-  font-size: 22px;
+  font-size: 24px;
 }
 
 h3 {
-  font-size: 48px;
+  font-size: 56px;
+  margin-bottom: 0px;
 }
 
-small {
-  display: block;
-  text-align: center;
+p {
+  font-size: 14px;
 }
 
 form {
   text-align: center;
-  margin: 2rem auto 1rem;
+  margin: 25px auto;
 }
 
 input {
   border: none;
-  border-radius: px;
+  border-radius: 4px;
+  width: 180px;
 }
 
 input:focus {
   outline: 0;
 }
 
+a {
+  transition: all 200ms ease-in-out;
+}
+
 a:hover {
   text-decoration: none;
+  opacity: 0.5;
 }
 
 button {
@@ -52,16 +58,21 @@ button {
   border: none;
   cursor: text;
   color: #ffffff;
+  transition: all 200ms ease-in-out;
 }
 
 button:focus {
   outline: 0;
 }
 
+button:hover {
+  opacity: 0.5;
+}
+
 .container {
   max-width: 450px;
   margin: 10px auto;
-  padding: 2rem 3rem;
+  padding: 3rem;
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0 0 50px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
   color: #ffffff;
@@ -77,7 +88,6 @@ button:focus {
 
 .container.light button.active {
   cursor: pointer;
-  /*color: #1804cf;*/
   color: #101048;
 }
 
@@ -94,15 +104,43 @@ button:focus {
   color: #2c90e2;
 }
 
+.col-1 {
+  padding: 0;
+}
+
 .now-card {
-  margin-bottom: 0;
   text-align: center;
   background: none;
   border: none;
 }
 
+.card-body {
+  padding-bottom: 15px;
+}
+
+.card-body .d-flex {
+  margin: auto 60px;
+}
+
+.card-body .d-flex .col-6 {
+  padding: 0px;
+}
+
+.units {
+  font-size: 16px;
+}
+
+.card-description {
+  margin: 5px 50px 30px;
+}
+
+.card-description .col-3 {
+  padding: 0 10px;
+}
+
 .card-deck .card {
-  margin: 10px 10px 15px;
+  margin: 10px 10px 20px;
+  font-size: 14px;
   text-align: center;
   background: none;
   border: none;
@@ -112,15 +150,17 @@ button:focus {
   padding: 0px;
 }
 
-.units {
-  position: absolute;
-  font-size: 16px;
-  top: 220px;
-  margin-left: 8px;
+.card-deck .card .icon {
+  padding: 0 4px 4px;
 }
 
-.min {
+.transparent {
   color: rgba(256, 256, 256, 0.5);
+}
+
+.footer {
+  display: block;
+  text-align: center;
 }
 
 #weather-description {

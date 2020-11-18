@@ -21,8 +21,7 @@ h2 {
 }
 
 h3 {
-  font-size: 56px;
-  margin-bottom: 0px;
+  font-size: 32px;
 }
 
 p {
@@ -65,14 +64,10 @@ button:focus {
   outline: 0;
 }
 
-button:hover {
-  opacity: 0.5;
-}
-
 .container {
-  max-width: 450px;
+  max-width: 400px;
   margin: 10px auto;
-  padding: 3rem;
+  padding: 2rem 2rem;
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0 0 50px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
   color: #ffffff;
@@ -84,6 +79,10 @@ button:hover {
 
 .container.dark {
   background: #101048;
+}
+
+.units button {
+  cursor: default;
 }
 
 .container.light button.active {
@@ -115,19 +114,17 @@ button:hover {
 }
 
 .card-body {
-  padding-bottom: 15px;
+  padding: 5px 15px 15px;
 }
 
-.card-body .d-flex {
-  margin: auto 60px;
-}
-
-.card-body .d-flex .col-6 {
-  padding: 0px;
+.card-body .icon {
+  padding: 10px;
 }
 
 .units {
-  font-size: 16px;
+  position: relative;
+  font-size: 14px;
+  top: -10px;
 }
 
 .card-description {
@@ -135,7 +132,11 @@ button:hover {
 }
 
 .card-description .col-3 {
-  padding: 0 10px;
+  padding: 0 5px;
+}
+
+.card-description .col-3.description {
+  padding: 0;
 }
 
 .card-deck .card {

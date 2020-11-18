@@ -1,6 +1,4 @@
-// API Key 
 let weatherApiKey = "cef6ae7836ecd17a2e06e0819975713e";
-
 let isCelsius = true;
 
 // Date 
@@ -39,9 +37,9 @@ let months = [
   "December"
 ];
 
-function updateTheme(hours) {
+function updateTheme(current, sunrise, sunset) {
   let container = document.querySelector(".container");
-    if (hours < 18 && hours >= 6 ) {
+    if (current < sunset && current >= sunrise ) {
     container.classList.add("light");
     container.classList.remove("dark");
   } else {
@@ -50,7 +48,7 @@ function updateTheme(hours) {
   }
 }
 
-function nowDateTime () {
+function nowDateTime() {
   let now = new Date();
   let day = now.getDay();
   let longDay = days[day];
@@ -62,18 +60,7 @@ function nowDateTime () {
   if (minutes<10) {
     minutes = `0${minutes}`;
   }
-  updateTheme(hours);
   return `${longDay}, ${date} ${longMonth}<br/>${hours}:${minutes}`;
-}
-
-function getTime(unixTimestamp) {
-  let now = new Date(unixTimestamp * 1000);
-  let hours = now.getHours();
-  let minutes = now.getMinutes();
-  if (minutes<10) {
-    minutes = `0${minutes}`;
-  }
-  return `${hours}:${minutes}`;
 }
 
 function getWeekDay(unixTimestamp) {
@@ -113,6 +100,7 @@ function getWeather(location, unit){
   coordinates = axios
     .get(apiUrl)
     .then(response => {
+      console.log(response.data);
       let temperature = Math.round(response.data.main.temp);
       let temperatureElement = document.querySelector("#current-temp");
       temperatureElement.innerHTML = temperature;
@@ -130,11 +118,15 @@ function getWeather(location, unit){
       }
       let humidity = document.querySelector("#humidity");
       humidity.innerHTML = response.data.main.humidity + "%";
-      let latitude = response.data.coord.lat;
-      let longitude = response.data.coord.lon;
+      let sunrise = response.data.sys.sunrise;
+      let sunset = response.data.sys.sunset;
+      let current = response.data.dt;
+      updateTheme(current, sunrise, sunset);
       skycons.remove("weather-icon");
       skycons.add("weather-icon", mapSkycons[response.data.weather[0].icon]);
       skycons.play();
+      let latitude = response.data.coord.lat;
+      let longitude = response.data.coord.lon;
       return { latitude, longitude };
     });
 
@@ -191,49 +183,32 @@ function toUserLocation(event) {
 }
 
 // Celsius <--> Fahrenheit
-function celsiusToFahrenheit(celsius){
-  return Math.round(celsius * 9/5 + 32);
-}
-
-function fahrenheitToCelsius(fahren){
-  return Math.round((fahren - 32) * 5/9);
-}
-
-function changeToFahrenheit(){
-  let temperatures = document.querySelectorAll(".temperature");
-  temperatures.forEach(temp => {
-    temp.innerHTML = celsiusToFahrenheit(temp.innerHTML);
-  })
-  isCelsius = false;
-}
-
-function changeToCelsius(){
-  let temperatures = document.querySelectorAll(".temperature");
-  temperatures.forEach(temp => {
-    temp.innerHTML = fahrenheitToCelsius(temp.innerHTML);
-  })
-  isCelsius = true;
-}
-
-function changeScale(event){
+function changeToFahrenheit(event){
   event.preventDefault();
-  if (isCelsius) {
-    changeToFahrenheit();
-    let scaleF = document.querySelector("#fahrenheit");
-    scaleF.classList.remove("active");
-    let scaleC = document.querySelector("#celsius");
-    scaleC.classList.add("active");
-  } else {
-    changeToCelsius();
-    let scaleF = document.querySelector("#fahrenheit");
-    scaleF.classList.add("active");
-    let scaleC = document.querySelector("#celsius");
-    scaleC.classList.remove("active");
+  if (isCelsius){
+    let temperatures = document.querySelectorAll(".temperature");
+    temperatures.forEach(temp => {
+      temp.innerHTML = Math.round(temp.innerHTML * 9/5 + 32);
+    })
+    fahren.classList.remove("active");
+    celsius.classList.add("active");
+    isCelsius = false;
   }
 }
 
+function changeToCelsius(event){
+  event.preventDefault();
+  if (!isCelsius){
+    let temperatures = document.querySelectorAll(".temperature");
+    temperatures.forEach(temp => {
+      temp.innerHTML = Math.round((temp.innerHTML - 32) * 5/9);
+    })
+    celsius.classList.remove("active");
+    fahren.classList.add("active");
+    isCelsius = true;
+  }
+}
 
-// Event Listeners
 let locationButton = document.querySelector("#location");
 locationButton.addEventListener("click", toUserLocation);
 
@@ -241,10 +216,9 @@ let cityForm = document.querySelector("#city-form");
 cityForm.addEventListener("submit", updateCityWeather);
 
 let fahren = document.querySelector("#fahrenheit");
-fahren.addEventListener("click", changeScale);
+fahren.addEventListener("click", changeToFahrenheit);
 
 let celsius = document.querySelector("#celsius");
-celsius.addEventListener("click", changeScale);
-
+celsius.addEventListener("click", changeToCelsius);
 
 updateWeather("q=lisbon");
